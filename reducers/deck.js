@@ -1,7 +1,7 @@
 import {
   GOT_DECKS,
   GOT_DECK,
-} from '../actions/deck';
+} from '../actions/types';
 
 const decks = (state = {}, action) => {
   switch (action.type) {

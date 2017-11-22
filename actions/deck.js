@@ -1,12 +1,13 @@
 import {
   AsyncStorage,
 } from 'react-native';
+import {
+  ADD_DECK,
+  GOT_DECK,
+  GOT_DECKS,
+} from './types';
 
 const DECKS_KEY = 'udaciCards:decks';
-
-export const GOT_DECKS = 'GOT_DECKS';
-export const GOT_DECK = 'GOT_DECK';
-export const ADD_DECK = 'ADD_DECK';
 
 export const gotDecks = decks => {
   return {
