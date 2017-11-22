@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getDeck } from '../actions/deck';
+import { globalStyles, deckStyles } from '../helpers/styles';
 
 class Deck extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,8 +27,8 @@ class Deck extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
-        <View style={styles.deckContainer}>
+      <View style={globalStyles.container}>
+        <View style={deckStyles.deckContainer}>
           <Text style={{fontSize: 20}}>
             { deck.title }
           </Text>
@@ -40,23 +41,8 @@ class Deck extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  deckContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
 const mapStateToProps = ({ decks }) => ({
   deck: decks.deck,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getDeck: title => dispatch(getDeck(title)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Deck);
+export default connect(mapStateToProps, { getDeck })(Deck);

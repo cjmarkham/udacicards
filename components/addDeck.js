@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { addDeck } from '../actions/deck';
 import Button from './button';
 import Input from './input';
-import globalStyles from '../helpers/styles';
+import { globalStyles } from '../helpers/styles';
 
 class AddDeck extends React.Component {
   state = {
@@ -48,12 +48,8 @@ class AddDeck extends React.Component {
   }
 }
 
-const mapStateToProps = ({ deck }) => ({
-  deck: deck,
+const mapStateToProps = ({ decks }) => ({
+  deck: decks.deck,
 });
 
-const mapDispatchToProps = dispatch => ({
-  addDeck: data => dispatch(addDeck(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);
+export default connect(mapStateToProps, { addDeck })(AddDeck);

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -10,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { getDecks } from '../actions/deck';
 import { NavigationActions } from 'react-navigation';
+import { globalStyles, deckStyles } from '../helpers/styles';
 
 class Decks extends React.Component {
   state = {
@@ -23,18 +23,17 @@ class Decks extends React.Component {
   }
 
   renderDeck = ({ item }) => {
-    console.log('ITEM=', item);
     return (
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate('deck', {
           title: item.data.title,
         })}
-        style={styles.deck}>
+        style={deckStyles.deck}>
         <View>
-          <Text style={styles.deckName}>
+          <Text style={deckStyles.deckName}>
             { item.data.title }
           </Text>
-          <Text style={styles.deckCardCount}>
+          <Text style={deckStyles.deckCardCount}>
             { item.data.questions.length } cards
           </Text>
         </View>
@@ -44,6 +43,11 @@ class Decks extends React.Component {
 
   normalizedDecks = decks => {
     let array = [];
+
+    if ( ! decks) {
+      return array;
+    }
+
     Object.keys(decks).map(deckKey => {
       array.push({key: deckKey, data: decks[deckKey]});
     });
@@ -61,7 +65,7 @@ class Decks extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <FlatList
           renderItem={this.renderDeck}
           data={normalizedDecks} />
@@ -70,31 +74,8 @@ class Decks extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  deck: {
-    alignItems: 'center',
-    padding: 20,
-    borderBottomWidth: 1,
-    borderColor: '#333',
-  },
-  deckName: {
-    fontSize: 20,
-  },
-  deckCardCount: {
-    fontSize: 14,
-    textAlign: 'center',
-  }
-})
-
 const mapStateToProps = ({ decks }) => ({
   decks: decks.decks,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getDecks: () => dispatch(getDecks()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Decks);
+export default connect(mapStateToProps, { getDecks })(Decks);

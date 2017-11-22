@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Button from './button';
-import globalStyles from '../helpers/styles';
 import { Brand } from '../utils/colors';
 import { getDeck } from '../actions/deck';
+import { globalStyles, quizStyles } from '../helpers/styles';
 
 class Quiz extends React.Component {
   state = {
@@ -95,18 +95,18 @@ class Quiz extends React.Component {
           {
             ! showAnswer
               ? <View>
-                  <Text style={styles.question}>
+                  <Text style={quizStyles.question}>
                     { deck.questions[currentQuestion].question }
                   </Text>
-                  <TouchableOpacity style={styles.toggleAnswer} onPress={() => this.setState({ showAnswer: true })}>
+                  <TouchableOpacity style={quizStyles.toggleAnswer} onPress={() => this.setState({ showAnswer: true })}>
                     <Text style={{color: Brand}}>Show answer</Text>
                   </TouchableOpacity>
                 </View>
               : <View>
-                  <Text style={styles.question}>
+                  <Text style={quizStyles.question}>
                     { deck.questions[currentQuestion].answer }
                   </Text>
-                  <TouchableOpacity style={styles.toggleAnswer} onPress={() => this.setState({ showAnswer: false })}>
+                  <TouchableOpacity style={quizStyles.toggleAnswer} onPress={() => this.setState({ showAnswer: false })}>
                     <Text style={{color: Brand}}>Show question</Text>
                   </TouchableOpacity>
                 </View>
@@ -123,18 +123,6 @@ class Quiz extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  question: {
-    textAlign: 'center',
-    fontSize: 20,
-    marginVertical: 10,
-  },
-  toggleAnswer: {
-    alignItems: 'center',
-    marginVertical: 10,
-  }
-});
 
 const mapStateToProps = ({ decks }) => ({
   deck: decks.deck,

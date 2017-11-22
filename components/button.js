@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Platform,
-  StyleSheet,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -12,6 +11,7 @@ import {
   BrandLight,
   TypeDefault,
 } from '../utils/colors';
+import { buttonStyles } from '../helpers/styles';
 
 class Button extends React.Component {
   static propTypes = {
@@ -26,37 +26,13 @@ class Button extends React.Component {
     return (
       <TouchableOpacity
         onPress={onPress}
-        style={[styles.default, styles[type], style]}>
-        <Text style={styles[type === 'primary' ? 'textLight' : 'textDark']}>
+        style={[buttonStyles.default, buttonStyles[type], style]}>
+        <Text style={buttonStyles[type === 'primary' ? 'textLight' : 'textDark']}>
           { children }
         </Text>
       </TouchableOpacity>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  default: {
-    padding: 20,
-    borderRadius: Platform.OS === 'ios' ? 2 : 8,
-    borderWidth: 1,
-    borderColor: '#333',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    height: 50,
-  },
-  primary: {
-    borderColor: BrandDark,
-    backgroundColor: Brand,
-  },
-  textLight: {
-    color: 'white',
-  },
-  textDark: {
-    color: TypeDefault,
-  },
-});
 
 export default Button;

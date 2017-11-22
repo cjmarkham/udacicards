@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   View,
@@ -10,7 +9,7 @@ import { connect } from 'react-redux';
 import { addCard } from '../actions/card';
 import { getDeck } from '../actions/deck';
 import Input from './input';
-import globalStyles from '../helpers/styles';
+import { globalStyles } from '../helpers/styles';
 
 class AddCard extends React.Component {
   state = {
@@ -53,9 +52,4 @@ const mapStateToProps = ({ decks }) => ({
   deck: decks.deck,
 });
 
-const mapDispatchToProps = dispatch => ({
-  addCard: (deck, data) => dispatch(addCard(deck, data)),
-  getDeck: title => dispatch(getDeck(title)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddCard);
+export default connect(mapStateToProps, { addCard, getDeck })(AddCard);
