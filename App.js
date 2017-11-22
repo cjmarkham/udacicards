@@ -16,76 +16,12 @@ import {
   AddCard,
   Quiz,
 } from './pages';
-import { Ionicons } from '@expo/vector-icons';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 import { Constants } from 'expo';
+import MainStack from './routing/main';
 import { Brand } from './utils/colors';
-
-const HomeTabs = TabNavigator({
-  decks: {
-    screen: Decks,
-    navigationOptions: {
-      tabBarLabel: 'Decks',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-    },
-  },
-  addDeck: {
-    screen: AddDeck,
-    navigationOptions: {
-      tabBarLabel: 'Add Deck',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-plus' size={30} color={tintColor} />
-    },
-  }
-});
-
-const DeckTabs = TabNavigator({
-  deck: {
-    screen: Deck,
-    navigationOptions: {
-      tabBarLabel: 'Deck',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-    },
-  },
-  addCard: {
-    screen: AddCard,
-    navigationOptions: {
-      title: 'Add card',
-      tabBarLabel: 'Add Card',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-    },
-  },
-  quiz: {
-    screen: Quiz,
-    navigationOptions: {
-      title: 'Quiz',
-      tabBarLabel: 'Start Quiz',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-    },
-  }
-})
-
-const Stack = StackNavigator({
-  home: {
-    screen: HomeTabs,
-    navigationOptions: {
-      headerTintColor: '#fff',
-      headerStyle: {
-        backgroundColor: Brand,
-      },
-      title: 'Home',
-    }
-  },
-  deck: {
-    screen: DeckTabs,
-    navigationOptions: {
-      headerTintColor: '#fff',
-      headerStyle: {
-        backgroundColor: Brand,
-      },
-    }
-  },
-});
+import { scheduleNotification } from './helpers/notifications';
 
 const store = createStore(
   reducers,
@@ -95,6 +31,10 @@ const store = createStore(
 );
 
 class App extends React.Component {
+  componentDidMount () {
+    scheduleNotification();
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -102,7 +42,7 @@ class App extends React.Component {
           <View style={{backgroundColor: Brand, height: Constants.statusBarHeight}}>
             <StatusBar translucent backgroundColor={Brand} {...this.props} />
           </View>
-          <Stack />
+          <MainStack />
           <TouchableOpacity style={{padding: 10}} onPress={() => AsyncStorage.clear()}>
             <Text style={{textAlign: 'center'}}>Clear storage</Text>
           </TouchableOpacity>
